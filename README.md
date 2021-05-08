@@ -1,4 +1,15 @@
 # HC-SR501
+
+Relay
+GPIO21 --  relay signal
+2      --  relay VCC
+6      --  relay GND
+
+Push Button
+GPIO20 --  Push RED(+)
+39     --  Push BLACK(-)
+ 
+
 HC-SR501 움직임센서
 
     import RPi.GPIO as GPIO
