@@ -23,6 +23,7 @@ print("This is my file to demonstrate best practices.")
 def pushButton():
     #GPIO.wait_for_edge(push, GPIO.RISING, bouncetime=100)
     #sleep(0.1)
+    global count
     
     if GPIO.input(push)==0:
             print ("Push Detected")
