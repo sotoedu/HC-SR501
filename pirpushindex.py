@@ -53,6 +53,7 @@ def main():
             
     except:
         GPIO.cleanup()
+        print ("except miss..")
             
 
 if __name__ == "__main__":

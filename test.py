@@ -20,17 +20,26 @@ sleep(2)
 
 print("This is my file to demonstrate best practices.")
 
-def process_data(data):
-    print("Beginning data processing...")
-    modified_data = data + " that has been modified"
-    sleep(3)
-    print("Data processing finished.")
-    return modified_data
+def pushButton():
+    #GPIO.wait_for_edge(push, GPIO.RISING, bouncetime=100)
+    #sleep(0.1)
+    
+    if GPIO.input(push)==0:
+            print ("Push Detected")
+            GPIO.output(relay, GPIO.HIGH)
+            sleep(3)
+            GPIO.output(relay, GPIO.LOW)
+            print ("Detected")
+            sleep(3)
+            count = 0
+    else:
+        print ("miss..")
+        sleep(0.1)
 
 def sensorPIR():
     global count
     if GPIO.input(sensor)==1:
-        sleep(0.5)
+        sleep(1)
         print ("Motion Detected: ", count)
         count += 1
     else:
@@ -45,7 +54,8 @@ def main():
         while True:
             print("Waitig for sensor to settle ")
             sensorPIR()
-            sleep(1)
+            pushButton()
+            sleep(0.3)
             
     except Exception as error:
         GPIO.cleanup()
