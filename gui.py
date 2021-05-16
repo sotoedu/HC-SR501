@@ -2,17 +2,27 @@ import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel
 from PyQt5.QtGui import QIcon, QPixmap
 
+import pygame
+import pygame.camera
+
+pygame.init()
+pygame.camera.init()
+
+cam = pygame.camera.Camera("/dev/video0", (width, height))
+window = pygame.display.set_mode((width, height), pygame.RESIZABLE)
+cam.start()
+
 # https://pythonspot.com/gui/
 
 class App(QWidget):
 
     def __init__(self):
         super().__init__()
-        self.title = 'PyQt5 simple window - pythonspot.com'
-        self.left = 10
-        self.top = 10
-        self.width = 640
-        self.height = 480
+        self.title = 'EZ Recycle 1.5'
+        self.left = 100
+        self.top = 100
+        self.width = 1024
+        self.height = 960
         self.initUI()
         
     def initUI(self):
@@ -22,10 +32,14 @@ class App(QWidget):
         self.label = QLabel('eAEST', self)
         
         # Create widget
-#         label = QLabel(self)
-#         pixmap = QPixmap('new.jpg')
-#         label.setPixmap(pixmap)
-#         self.resize(pixmap.width(),pixmap.height())
+        label = QLabel(self)
+        #pixmap = QPixmap('new.jpg')
+        image = cam.get_image()
+        window.blit(image, (0, 0))
+        pixmap = pygame.display.update()
+
+        label.setPixmap(pixmap)
+        #self.resize(pixmap.width(),pixmap.height())
         
         self.show()
     
