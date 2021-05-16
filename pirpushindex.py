@@ -17,14 +17,11 @@ GPIO.setup(sensor, GPIO.IN)
 print ("Start!!")
 time.sleep(2)
 
-try:
-    while True:
-        #if GPIO.input(push):
-        print("Waitig for sensor to settle: ", count)
-        #GPIO.wait_for_edge(push, GPIO.RISING, bouncetime=100)
-        time.sleep(0.1)
-        
-        if GPIO.input(push)==1:
+def pushButton():
+    GPIO.wait_for_edge(push, GPIO.RISING, bouncetime=100)
+    time.sleep(0.1)
+    
+    if GPIO.input(push)==1:
             print ("Push Detected")
             GPIO.output(relay, GPIO.HIGH)
             time.sleep(3)
@@ -32,27 +29,32 @@ try:
             print ("Detected")
             time.sleep(3)
             count = 0
-        else:
-            print ("miss..")
-            time.sleep(1)
-        
-        if GPIO.input(sensor)==1:
+    else:
+        print ("miss..")
+        time.sleep(1)
+    
+def sensorPIR(count):
+    if GPIO.input(sensor)==1:
             print ("Motion Detected")
             GPIO.output(relay, GPIO.HIGH)
             time.sleep(3)
             count += 1
-        else:
-            print ("miss..")
-            time.sleep(1)
-        
-        
-except:
-    GPIO.cleanup()
+    else:
+        print ("Motion miss..")
+        time.sleep(1)
     
-        
-      
-      
+    return count
 
-        
-      
-      
+def main():
+    try:
+        while True:
+            print("Waitig for sensor to settle: ", count)
+            count = sensorPIR(count)
+            
+    except:
+        GPIO.cleanup()
+            
+
+if __name__ == "__main__":
+    main()
+    
