@@ -4,9 +4,9 @@ from time import sleep
 
 GPIO.setmode(GPIO.BCM) 
 
-push = 20
+push = 26
 relay = 21
-sensor = 16
+sensor = 13
 
 count = 0
 
